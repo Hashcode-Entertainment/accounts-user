@@ -6,6 +6,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @AllArgsConstructor
@@ -25,6 +26,9 @@ public class UserService {
         repository.deleteById(id);
     }
 
+    public Optional<User> findUserByUsername(String userName){
+        return
+    }
 
 
 }
