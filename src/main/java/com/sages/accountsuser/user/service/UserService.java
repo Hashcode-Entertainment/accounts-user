@@ -19,12 +19,17 @@ public class UserService {
         return repository.findAll();
     }
 
-    public void addUser(User user){
+    public void addUser(User user) {
         repository.save(user);
     }
 
-    public void deleteUser(Long id){
+    public void deleteUser(Long id) {
         repository.deleteById(id);
+    }
+
+//    k
+    public Optional<User> findById(Long id) {
+        return repository.findById(id);
     }
 
 //    public Optional<User> findByUsername(String userName) {
