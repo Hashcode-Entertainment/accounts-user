@@ -27,9 +27,16 @@ public class UserService {
         repository.deleteById(id);
     }
 
-    public Optional<User> findByUsername(String userName) {
-        return repository.findByUsername(userName);
+//    public Optional<User> findByUsername(String userName) {
+//        return repository.findByUsername(userName);
+//    }
+
+
+    public User update(Long id, User user) {
+        Optional<User> byId = repository.findById(id);
+        User updateUser = byId.get();
+        updateUser.setFirstName(user.getFirstName());
+        updateUser.setLastName(user.getLastName());
+        return updateUser;
     }
-
-
 }

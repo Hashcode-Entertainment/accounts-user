@@ -3,41 +3,62 @@ package com.sages.accountsuser.user.controller;
 import com.sages.accountsuser.user.domain.User;
 import com.sages.accountsuser.user.service.UserService;
 import lombok.AllArgsConstructor;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import java.net.URI;
 import java.util.List;
 
 @RestController
-@RequestMapping("user")
+@RequestMapping("users")
 @AllArgsConstructor
 public class UserController {
 
     private final UserService service;
 
-    @GetMapping("/{firstName}/{lastName}")
-    @ResponseBody
-    public String addUser(@PathVariable String firstName, @PathVariable String lastName) {
-        User user = User.builder()
-                .firstName(firstName)
-                .lastName(lastName)
+    @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
+    public ResponseEntity<Void> addUser(@RequestBody User user) {
+        User newUser = User.builder()
+                .firstName(user.getFirstName())
+                .lastName(user.getLastName())
+                .email(user.getEmail())
+                .password(user.getPassword())
+                .role(user.getRole())
+                .information(user.getInformation())
                 .build();
-        service.addUser(user);
-        return "user added";
+        service.addUser(newUser);
+        return ResponseEntity.created(createdUri(newUser)).build();
     }
 
-    @GetMapping("/delete/{id}")
-    public String deleteUser(@PathVariable Long id) {
+    private URI createdUri(User user) {
+        return ServletUriComponentsBuilder.fromCurrentRequestUri().path("/" + user.getId().toString()).build().toUri();
+    }
+
+    @GetMapping("{id}")
+    public ResponseEntity<User> findById(@PathVariable Long id) {
+    return service.findById(id)
+            .map(ResponseEntity::ok)
+            .orElse(ResponseEntity.notFound().build());
+    }
+
+    @DeleteMapping("{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void deleteUser(@PathVariable Long id) {
         service.deleteUser(id);
-        return "user deleted";
     }
 
-    @GetMapping("/all")
-    public String findAll() {
-        return String.valueOf(service.listAllUsers());
+    @GetMapping("all")
+    @ResponseStatus(HttpStatus.OK)
+    public List<User> findAll() {
+        return service.listAllUsers();
+    }
+
+    @PutMapping("{id}")
+    public void update(@PathVariable Long id, @RequestBody User user) {
+        service.update(id, user);
     }
 
 }
