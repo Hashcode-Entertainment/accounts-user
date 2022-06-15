@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
+import java.nio.channels.AcceptPendingException;
 import java.util.List;
 
 @RestController
@@ -56,7 +57,8 @@ public class UserController {
         return service.listAllUsers();
     }
 
-    @PutMapping("{id}")
+    @PatchMapping("{id}")
+    @ResponseStatus(HttpStatus.ACCEPTED)
     public void update(@PathVariable Long id, @RequestBody User user) {
         service.update(id, user);
     }

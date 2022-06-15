@@ -27,7 +27,6 @@ public class UserService {
         repository.deleteById(id);
     }
 
-//    k
     public Optional<User> findById(Long id) {
         return repository.findById(id);
     }
@@ -36,7 +35,7 @@ public class UserService {
 //        return repository.findByUsername(userName);
 //    }
 
-
+    @Transactional
     public User update(Long id, User user) {
         Optional<User> byId = repository.findById(id);
         User updateUser = byId.get();
