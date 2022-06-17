@@ -28,7 +28,6 @@ public class UserController {
                 .email(user.getEmail())
                 .password(user.getPassword())
                 .role(user.getRole())
-                .information(user.getInformation())
                 .build();
         service.addUser(newUser);
         return ResponseEntity.created(createdUri(newUser)).build();

@@ -29,10 +29,8 @@ public class User {
     private String lastName;
     private String password;
     private String email;
-    //- zakomentowane bo inaczej nie staruje aplikacja
     @ManyToOne
     private UsersRole role;
-    private String information;
 
     public User() {
     }
