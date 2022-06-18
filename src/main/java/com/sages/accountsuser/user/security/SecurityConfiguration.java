@@ -24,17 +24,17 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity httpSecurity)
             throws Exception {
-        httpSecurity.authorizeRequests()
-//                .antMatchers("/login")
-//                .authenticated()
+        httpSecurity
+                .httpBasic()
+                .and()
+                .authorizeRequests()
+                .antMatchers("/login")
+                .authenticated()
                 .anyRequest()
                 .permitAll()
                 .and()
                 .csrf()
                 .disable();
-
-//                .and()
-//                .httpBasic();
     }
 
     @Autowired
@@ -42,9 +42,11 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
             throws Exception {
         auth.jdbcAuthentication()
                 .dataSource(dataSource)
-                .usersByUsernameQuery("select email,password"
-                        + "from bael_users "
-                        + "where email = ?");
+                .usersByUsernameQuery("select email,password,'1' "
+                        + "from users "
+                        + "where email=?")
+                .authoritiesByUsernameQuery(
+                "SELECT '0', '0' from users where email=?");
     }
 
     @Bean

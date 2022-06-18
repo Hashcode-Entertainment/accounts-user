@@ -40,7 +40,7 @@ public class UserController {
                 .lastName(user.getLastName())
                 .email(user.getEmail())
                 .password(passwordEncode)
-                .role(new UsersRole())
+//                .role(usersRole)
                 .build();
         service.addUser(newUser);
         return ResponseEntity.created(createdUri(newUser)).build();
