@@ -8,6 +8,7 @@ import com.sages.accountsuser.user.service.UserService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -77,7 +78,7 @@ public class UserController {
         return service.listAllUsers();
     }
 
-    @PatchMapping("{id}")
+    @PutMapping("{id}")
     @ResponseStatus(HttpStatus.ACCEPTED)
     public void update(@PathVariable Long id, @RequestBody User user) {
         service.update(id, user);
@@ -89,5 +90,11 @@ public class UserController {
         return service.listUsersWithNoAdmins();
     }
 
+    @PatchMapping("{id}")
+    @ResponseStatus(HttpStatus.ACCEPTED)
+//    @PreAuthorize("hasAuthority('ADMIN')")
+    public void setRole(@PathVariable Long id, @RequestBody User user) {
+        service.setRole(id, user);
+    }
 
 }

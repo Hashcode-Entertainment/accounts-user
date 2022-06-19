@@ -55,4 +55,12 @@ public class UserService {
         updateUser.setLastName(user.getLastName());
         return updateUser;
     }
+
+    @Transactional
+    public User setRole(Long id, User user) {
+        Optional<User> byId = repository.findById(id);
+        User updateUser = byId.get();
+        updateUser.setRole(Role.ADMIN);
+        return updateUser;
+    }
 }
