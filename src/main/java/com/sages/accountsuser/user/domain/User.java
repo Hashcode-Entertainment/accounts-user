@@ -29,7 +29,7 @@ public class User {
     private String lastName;
     private String password;
     private String email;
-    private boolean enabled = true;
+   // private boolean enabled = true;
     
     @ManyToOne
     private UsersRole role;
