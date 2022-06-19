@@ -27,7 +27,7 @@ public class UserController {
 
 
     @PostMapping("/foo")
-    public ResponseEntity<String> foo(){
+    public ResponseEntity<String> foo() {
         return ResponseEntity.ok("hello");
     }
 
@@ -80,6 +80,12 @@ public class UserController {
     @ResponseStatus(HttpStatus.ACCEPTED)
     public void update(@PathVariable Long id, @RequestBody User user) {
         service.update(id, user);
+    }
+
+    @ResponseStatus(HttpStatus.OK)
+    @GetMapping("/users")
+    public List<User> usersListWithNoAdmin() {
+        return service.listUsersWithNoAdmins();
     }
 
 

@@ -1,11 +1,13 @@
 package com.sages.accountsuser.user.service;
 
+import com.sages.accountsuser.user.domain.Role;
 import com.sages.accountsuser.user.domain.User;
 import com.sages.accountsuser.user.repository.UserRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -17,6 +19,16 @@ public class UserService {
 
     public List<User> listAllUsers() {
         return repository.findAll();
+    }
+
+    public List<User> listUsersWithNoAdmins() {
+        List<User> usersListWithNoAdmins = new ArrayList<>();
+        for (User u : listAllUsers()) {
+            if (u.getRole().toString().equals(Role.USER.toString())) {
+                usersListWithNoAdmins.add(u);
+            }
+        }
+        return usersListWithNoAdmins;
     }
 
     public void addUser(User user) {
