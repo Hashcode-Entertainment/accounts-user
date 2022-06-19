@@ -6,12 +6,7 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Entity
 @Getter
@@ -29,10 +24,8 @@ public class User {
     private String lastName;
     private String password;
     private String email;
-   // private boolean enabled = true;
-    
-    @ManyToOne
-    private UsersRole role;
+    @Enumerated(EnumType.STRING)
+    private Role role;
 
     public User() {
     }

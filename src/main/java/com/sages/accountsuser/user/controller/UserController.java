@@ -1,5 +1,6 @@
 package com.sages.accountsuser.user.controller;
 
+import com.sages.accountsuser.user.domain.Role;
 import com.sages.accountsuser.user.domain.User;
 import com.sages.accountsuser.user.domain.UserCreate;
 import com.sages.accountsuser.user.domain.UsersRole;
@@ -40,7 +41,7 @@ public class UserController {
                 .lastName(user.getLastName())
                 .email(user.getEmail())
                 .password(passwordEncode)
-//                .role(usersRole)
+                .role(Role.USER)
                 .build();
         service.addUser(newUser);
         return ResponseEntity.created(createdUri(newUser)).build();

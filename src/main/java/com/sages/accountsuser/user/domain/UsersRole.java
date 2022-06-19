@@ -5,9 +5,9 @@ import lombok.Getter;
 import javax.persistence.*;
 import java.util.List;
 
-@Entity
-@Table(name = "roles")
-@Getter
+//@Entity
+//@Table(name = "roles")
+//@Getter
 public
 class UsersRole {
 
